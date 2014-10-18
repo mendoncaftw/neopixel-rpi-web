@@ -1,0 +1,25 @@
+<!doctype html>
+<title>Controll LED Strip</title>
+<link rel=stylesheet type=text/css href="{{ url_for('static', filename='colpick.css') }}">
+<script type=text/javascript src="{{  url_for('static', filename='jquery-2.1.1.js') }}"></script>
+<script type=text/javascript src="{{  url_for('static', filename='colpick.js') }}"></script>
+<body>
+  <div id="picker"></div>
+  <script type="text/javascript">
+  $(document).ready(function() {
+    $('#picker').colpick({
+      flat: true,
+      layout: 'hex',
+      submit: false,
+      onChange: function(hsb,hex,rgb,el,bySetColor) {
+        $.ajax({
+          type: 'POST',
+          url: '/set_color',
+          contentType: 'application/json',
+          data: JSON.stringify(rgb)
+        });
+      }
+    });
+  });
+  </script>
+</body>
